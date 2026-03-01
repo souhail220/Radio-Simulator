@@ -1,7 +1,5 @@
 import random
 import time
-import logging
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from sqlalchemy.orm import joinedload
 from .models import Team
 from .config import BASE_LAT, BASE_LON, LOOP_SLEEP, SERVER_HOST, SERVER_PORT, ROUTES_PER_TEAM, ZONES_PER_TEAM_RANGE

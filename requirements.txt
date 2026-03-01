@@ -1,0 +1,8 @@
+shapely
+faker
+sqlalchemy
+psycopg2-binary
+python-dotenv
+requests
+geopy
+shortuuid

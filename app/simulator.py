@@ -14,6 +14,8 @@ class Simulator:
     def __init__(self):
         self.teams = []
 
+    def setup(self):
+        """Perform heavy initialization: DB queries and route fetching."""
         db = SessionLocal()
         try:
             # Query all teams and eagerly load radios

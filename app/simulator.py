@@ -1,7 +1,6 @@
 import random
 import time
-import asyncio
-import httpx
+import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from sqlalchemy.orm import joinedload
 from .models import Team
@@ -11,8 +10,9 @@ from .database import SessionLocal, TeamModel
 from .zoneGenerator import generate_zone, fetch_all_routes_batch_sync
 
 class Simulator:
-    def __init__(self):
+    def __init__(self, logger):
         self.teams = []
+        self.logger = logger
 
     def setup(self):
         """Perform heavy initialization: DB queries and route fetching."""
@@ -57,14 +57,14 @@ class Simulator:
         finally:
             db.close()
 
-        print(f"🚀 Fetching {len(route_tasks)} routes...")
+        self.logger.info(f"Fetching {len(route_tasks)} routes...")
         
         # 2. Fetch ALL routes concurrently (using batch cache)
         all_fetched_routes = self._fetch_all_routes_cached(route_tasks)
 
         # 3. Assemble Team objects
         total_routes = sum(len(r) for r in all_fetched_routes.values())
-        print(f"✅ Route retrieval complete. Total routes: {total_routes}")
+        self.logger.info(f"✅ Route retrieval complete. Total routes: {total_routes}")
         
         # Assemble teams using the fetched routes
         for info in teams_base_info:
@@ -87,13 +87,13 @@ class Simulator:
         return fetch_all_routes_batch_sync(route_tasks)
 
     def run(self):
-        print("🚀 Radio Fleet Simulator Started")
-        print(f"Teams: {len(self.teams)}")
+        self.logger.info("🚀 Radio Fleet Simulator Started")
+        self.logger.info(f"Teams: {len(self.teams)}")
         
         # Start the local HTTP server in a background thread
-        start_server(SERVER_HOST, SERVER_PORT)
+        start_server(SERVER_HOST, SERVER_PORT, self.logger)
 
-        print("Running...")
+        self.logger.info("Running...")
 
         while True:
             for team in self.teams:

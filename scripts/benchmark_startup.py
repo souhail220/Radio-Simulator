@@ -1,13 +1,13 @@
 import time
 from app.simulator import Simulator
+from app.config import logger
 
 def benchmark():
-    print("Starting benchmark...")
-    start_time = time.time()
+    logger.info("Starting benchmark...")
     
     try:
         instantiation_start = time.time()
-        simulator = Simulator()
+        simulator = Simulator(logger)
         instantiation_end = time.time()
         
         setup_start = time.time()
@@ -15,19 +15,19 @@ def benchmark():
         setup_end = time.time()
         
         total_duration = setup_end - instantiation_start
-        print(f"Initialization complete!")
-        print(f"Teams loaded: {len(simulator.teams)}")
-        print(f"Instantiation time: {instantiation_end - instantiation_start:.4f} seconds")
-        print(f"Setup time: {setup_end - setup_start:.2f} seconds")
-        print(f"TOTAL TIME TAKEN: {total_duration:.2f} seconds")
+        logger.info("Initialization complete!")
+        logger.info(f"Teams loaded: {len(simulator.teams)}")
+        logger.info(f"Instantiation time: {instantiation_end - instantiation_start:.4f} seconds")
+        logger.info(f"Setup time: {setup_end - setup_start:.2f} seconds")
+        logger.info(f"TOTAL TIME TAKEN: {total_duration:.2f} seconds")
         
         if total_duration > 30:
-            print("WARNING: Initialization is very slow (> 30s)!")
+            logger.warning("WARNING: Initialization is very slow (> 30s)!")
         else:
-            print("Performance is acceptable.")
+            logger.info("Performance is acceptable.")
             
     except Exception as e:
-        print(f"Error during benchmark: {e}")
+        logger.error(f"Error during benchmark: {e}")
 
 if __name__ == "__main__":
     benchmark()

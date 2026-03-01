@@ -19,12 +19,17 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(data).encode('utf-8'))
 
     def log_message(self, format, *args):
-        # Suppress writing a log message for every single request
-        pass
+        # Use the injected logger instead of printing to stderr
+        # self.server is the HTTPServer instance
+        if hasattr(self.server, 'logger'):
+            self.server.logger.debug(format % args)
+        else:
+            pass
 
-def start_server(host, port):
+def start_server(host, port, logger):
     server = HTTPServer((host, port), RequestHandler)
-    print(f"📡 Local Server listening on http://{host}:{port}")
+    server.logger = logger # Inject logger into server instance for handler access
+    logger.info(f"📡 Local Server listening on http://{host}:{port}")
     # Run the server in a background thread
     server_thread = threading.Thread(target=server.serve_forever, daemon=True)
     server_thread.start()

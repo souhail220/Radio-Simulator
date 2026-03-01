@@ -1,3 +1,12 @@
+import logging
+
+# Logging Configuration
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger("radio_simulator")
+
 # Simulation scale
 ROUTES_PER_TEAM = 5
 ZONES_PER_TEAM_RANGE = (1, 3)

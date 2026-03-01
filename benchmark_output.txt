@@ -1,0 +1,9 @@
+2026-03-01 22:41:07,885 - radio_simulator - INFO - Starting benchmark...
+2026-03-01 22:41:22,071 - radio_simulator - INFO - Fetching 100 routes...
+2026-03-01 22:41:22,084 - radio_simulator - INFO - Γ£à Route retrieval complete. Total routes: 100
+2026-03-01 22:41:22,111 - radio_simulator - INFO - Initialization complete!
+2026-03-01 22:41:22,111 - radio_simulator - INFO - Teams loaded: 20
+2026-03-01 22:41:22,111 - radio_simulator - INFO - Instantiation time: 0.0000 seconds
+2026-03-01 22:41:22,111 - radio_simulator - INFO - Setup time: 14.23 seconds
+2026-03-01 22:41:22,111 - radio_simulator - INFO - TOTAL TIME TAKEN: 14.23 seconds
+2026-03-01 22:41:22,111 - radio_simulator - INFO - Performance is acceptable.
